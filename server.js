@@ -8,7 +8,11 @@ const fs = require('fs');
 const app = express();
 // Middleware
 app.use(express.json());
-app.use(cors());
+//app.use(cors());
+app.use(cors({
+    origin: 'http://51.38.235.56'  // ou ton domaine, si tu as un domaine configuré
+  }));
+  
 
 require('dotenv').config();
 
@@ -222,4 +226,9 @@ app.get('/api/reservations', (req, res) => {
 
   
 // Démarrage du serveur
-app.listen(3000, () => console.log("Serveur démarré sur http://localhost:3000"));
+//app.listen(3000, () => console.log("Serveur démarré sur http://localhost:3000"));
+// Démarrage du serveur
+app.listen(3000, '0.0.0.0', () => {
+    console.log("Serveur démarré sur http://51.38.235.56:3000");
+  });
+  
