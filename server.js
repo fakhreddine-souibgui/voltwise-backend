@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 //app.use(cors());
 app.use(cors({
-    origin: 'http://51.38.235.56'  // ou ton domaine, si tu as un domaine configuré
+    origin: 'https://voltwise-solutions.com'  // ou ton domaine, si tu as un domaine configuré
   }));
   
 
