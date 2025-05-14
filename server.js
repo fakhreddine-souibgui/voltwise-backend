@@ -197,7 +197,7 @@ app.post('/api/formulaire', (req, res) => {
   });
   
   
-  app.post('/api/reservation', (req, res) => {
+/*  app.post('/api/reservation', (req, res) => {
     const { name, email, phone, date } = req.body;
   
     if (!name || !email || !phone || !date) {
@@ -213,7 +213,28 @@ app.post('/api/formulaire', (req, res) => {
   
       res.status(201).json({ message: 'Réservation de démo enregistrée avec succès !' });
     });
+  });*/
+  app.post('/api/reservation', (req, res) => {
+    const { name, email, phone, date } = req.body;
+  
+    if (!name || !email || !phone || !date) {
+      return res.status(400).json({ message: 'Tous les champs sont requis.' });
+    }
+  
+    // 🔧 Convertir la date ISO en format YYYY-MM-DD uniquement
+    const formattedDate = date.split('T')[0]; // par exemple : "2025-04-21"
+  
+    const sql = "INSERT INTO reservations (name, email, phone, demo_date) VALUES (?, ?, ?, ?)";
+    db.query(sql, [name, email, phone, formattedDate], (err, result) => {
+      if (err) {
+        console.error('Erreur MySQL :', err);
+        return res.status(500).json({ error: 'Erreur lors de l’enregistrement de la démo.' });
+      }
+  
+      res.status(201).json({ message: 'Réservation de démo enregistrée avec succès !' });
+    });
   });
+  
 
   // API pour récupérer toutes les réservations
 app.get('/api/reservations', (req, res) => {
